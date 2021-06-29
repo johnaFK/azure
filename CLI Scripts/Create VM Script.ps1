@@ -62,18 +62,16 @@ az network nsg rule create `
 	
 echo "----------------------------------------------------------"
 echo "|                                                         |"
-echo "|              Instalación de Docker en VM                |"
+echo "|              Instalacion de Docker en VM                |"
 echo "|                       $VMName                           |"
 echo "|                                                         |"
 echo "----------------------------------------------------------"
 	  
-
 az vm extension set `
   --name customScript `
   --publisher Microsoft.Azure.Extensions `
-  --protected-settings '{"commandToExecute": "./install-docker-on-linux.sh"}' `
   --resource-group $RGName `
-  --settings '{"fileUris":["https://raw.githubusercontent.com/MicrosoftDocs/mslearn-welcome-to-azure/master/configure-nginx.sh"]}' `
+  --settings '{\"fileUris\":[\"https://github.com/johnaFK/azure/blob/CLI-Scripts/CLI%20Scripts/install-docker-on-linux.sh\"], \"commandToExecute\": \"./install-docker-on-linux.sh\"}' `
   --version 2.1 `
   --vm-name $VMName 
   
