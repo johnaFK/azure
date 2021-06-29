@@ -72,10 +72,8 @@ az vm extension set `
   --publisher Microsoft.Azure.Extensions `
   --resource-group $RGName `
   --settings '{\"fileUris\":[\"https://github.com/johnaFK/azure/blob/CLI-Scripts/CLI%20Scripts/install-docker-on-linux.sh\"], \"commandToExecute\": \"./install-docker-on-linux.sh\"}' `
-  --version 2.1 `
   --vm-name $VMName 
-  
-  
 
-#az account list-locations -o table     southcentralus
+
+  #az account list-locations -o table     southcentralus
 #az vm image list      az vm image list --all --query "[?offer=='CentOS']"
