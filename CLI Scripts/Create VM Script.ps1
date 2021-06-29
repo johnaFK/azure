@@ -71,7 +71,7 @@ az vm extension set `
   --name customScript `
   --publisher Microsoft.Azure.Extensions `
   --resource-group $RGName `
-  --settings '{\"fileUris\":[\"https://github.com/johnaFK/azure/blob/CLI-Scripts/CLI%20Scripts/install-docker-on-linux.sh\"], \"commandToExecute\": \"./install-docker-on-linux.sh\"}' `
+  --settings '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-docker-on-linux.sh\"], \"commandToExecute\": \"./install-docker-on-linux.sh\"}' `
   --vm-name $VMName 
 
 
