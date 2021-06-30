@@ -5,7 +5,7 @@ $LocationAbr="scus"
 $ImageUrnAlias="CentOS"
 $StorageType="Standard_LRS"
 $OsDiskSize="64"
-$Size="Standard_B1s"
+$Size="Standard_B2s"
 $AuthType="all"
 $AdminUserName="linadmin"
 $AdminPassword="abcDEF1029;1"
@@ -67,8 +67,26 @@ az network nsg rule create `
   --nsg-name $NSGname `
   --name allow-http `
   --protocol tcp `
-  --priority 100 `
+  --priority 101 `
   --destination-port-ranges 8080 `
+  --access Allow
+
+  az network nsg rule create `
+  --resource-group $RGName `
+  --nsg-name $NSGname `
+  --name allow-http `
+  --protocol tcp `
+  --priority 102 `
+  --destination-port-ranges 8001 `
+  --access Allow
+
+  az network nsg rule create `
+  --resource-group $RGName `
+  --nsg-name $NSGname `
+  --name allow-http `
+  --protocol tcp `
+  --priority 103 `
+  --destination-port-ranges 8180 `
   --access Allow
 	
 echo "----------------------------------------------------------"
