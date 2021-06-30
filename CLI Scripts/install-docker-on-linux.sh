@@ -1,13 +1,16 @@
 #!/bin/bash
 
-echo "Install yum-utils"
+# Install yum-utils
 sudo yum install -y yum-utils
 
-echo "Add repository"
+# Add repository
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 	
-echo "Install Docker"
+# Install Docker
 sudo yum install -y docker-ce docker-ce-cli containerd.io
+
+# Configure Docker to start on boot
+sudo systemctl enable docker.service
  
-echo "Start Docker Service"
+# Start Docker Service
 sudo systemctl start docker

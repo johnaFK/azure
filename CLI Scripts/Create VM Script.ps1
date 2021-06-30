@@ -59,6 +59,15 @@ az network nsg rule create `
   --priority 100 `
   --destination-port-ranges 80 `
   --access Allow
+
+  az network nsg rule create `
+  --resource-group $RGName `
+  --nsg-name $NSGname `
+  --name allow-http `
+  --protocol tcp `
+  --priority 100 `
+  --destination-port-ranges 8080 `
+  --access Allow
 	
 echo "----------------------------------------------------------"
 echo "|                                                         |"
@@ -72,6 +81,20 @@ az vm extension set `
   --publisher Microsoft.Azure.Extensions `
   --resource-group $RGName `
   --settings '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-docker-on-linux.sh\"], \"commandToExecute\": \"./install-docker-on-linux.sh\"}' `
+  --vm-name $VMName 
+	
+echo "----------------------------------------------------------"
+echo "|                                                         |"
+echo "|              Instalacion de Drools en VM                |"
+echo "|                       $VMName                           |"
+echo "|                                                         |"
+echo "----------------------------------------------------------"
+	  
+az vm extension set `
+  --name customScript `
+  --publisher Microsoft.Azure.Extensions `
+  --resource-group $RGName `
+  --settings '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-drools-on-linux.sh\"], \"commandToExecute\": \"./install-drools-on-linux.sh\"}' `
   --vm-name $VMName 
 
 
