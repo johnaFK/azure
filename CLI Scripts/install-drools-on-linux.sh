@@ -1,11 +1,12 @@
 #!/bin/bash
 
+# Install Drools
 sudo docker run \
     -p 8080:8080 -p 8001:8001 -d \
     --name drools-wb \
     jboss/business-central-workbench-showcase:latest
 
-
+# Install Kie Server
 sudo docker run \
     -p 8180:8080 -d \
     --name kie-server \
