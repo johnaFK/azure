@@ -123,5 +123,11 @@ echo "The creation of the VM with drools has finished."
 $VMpublicIp = $(az vm show -d --name $VMName --resource-group $RGName --query "publicIps" -o tsv)
 
 echo "The public IP for the VM is: $VMpublicIp"
+
+echo "Access to the Drools Busines Central: http://$VMpublicIp:8080/business-central/"
+
+echo "Access to the Kie Server: http://$VMpublicIp:8180/kie-server"
+
+echo "Access to the REST API Service: http://$VMpublicIp:8180/kie-server/services/rest/server/"
   #az account list-locations -o table     southcentralus
 #az vm image list      az vm image list --all --query "[?offer=='CentOS']"
