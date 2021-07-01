@@ -65,7 +65,7 @@ az network nsg rule create `
 az network nsg rule create `
   --resource-group $RGName `
   --nsg-name $NSGname `
-  --name allow-http `
+  --name allow-http-drools-business-central `
   --protocol tcp `
   --priority 101 `
   --destination-port-ranges 8080 `
@@ -74,7 +74,7 @@ az network nsg rule create `
 az network nsg rule create `
   --resource-group $RGName `
   --nsg-name $NSGname `
-  --name allow-http `
+  --name allow-http-drools `
   --protocol tcp `
   --priority 102 `
   --destination-port-ranges 8001 `
@@ -83,7 +83,7 @@ az network nsg rule create `
 az network nsg rule create `
   --resource-group $RGName `
   --nsg-name $NSGname `
-  --name allow-http `
+  --name allow-http-kie-server `
   --protocol tcp `
   --priority 103 `
   --destination-port-ranges 8180 `
@@ -118,5 +118,10 @@ az vm extension set `
   --vm-name $VMName 
 
 
+echo "The creation of the VM with drools has finished."
+
+$VMpublicIp = $(az vm show -d --name $VMName --resource-group $RGName --query "publicIps" -o tsv)
+
+echo "The public IP for the VM is: $VMpublicIp"
   #az account list-locations -o table     southcentralus
 #az vm image list      az vm image list --all --query "[?offer=='CentOS']"
