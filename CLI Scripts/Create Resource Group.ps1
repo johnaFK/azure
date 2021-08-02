@@ -1,10 +1,6 @@
 Param([string]$Location, [string]$RGName)
 
-echo "----------------------------------------------------------"
-echo "|                                                         |"
-echo "|         Creando grupo de recursos $RGName               |"
-echo "|                                                         |"
-echo "----------------------------------------------------------"
+echo "Creating Resource Group $RGName........................"
 
 az group create `
 	--location $Location `
