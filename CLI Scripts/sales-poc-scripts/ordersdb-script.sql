@@ -2,6 +2,7 @@ CREATE TABLE [dbo].[Article](
 	[Id] [int] NOT NULL IDENTITY,
 	[Name] [nchar](300) NOT NULL,
 	[UnitPrice] [money] NOT NULL,
+	[ReferenceArticleId] [int] NOT NULL,
  CONSTRAINT [PK_Article] PRIMARY KEY ([Id])); 
 GO
 
@@ -184,7 +185,7 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE usp_GetOrderDetailsByOrderId 
+CREATE PROCEDURE usp_GetOrderDetailsByOrderId    
 	@OrderId int = 0
 AS
 BEGIN
@@ -195,7 +196,7 @@ BEGIN
     -- Insert statements for procedure here
 	SELECT od.OrderId, od.ArticleId, od.Quantity, od.SalePrice, od.Discount, od.Subtotal
 	FROM [dbo].[OrderDetail] AS od
-	WHERE o.OrderId = @OrderId
+	WHERE od.OrderId = @OrderId
 END
 GO
 
@@ -254,17 +255,49 @@ BEGIN
 END
 GO
 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE usp_GetOrdersByReferenceArticleId 
+	@ReferenceArticleId int = 0
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	SELECT o.[Id], o.[OrderDate], o.[Subtotal], o.[Taxes], o.[Total], o.[CustomerId], o.[OrderStatusId]
+    FROM [dbo].[Order] AS o
+    WHERE o.[Id] IN (
+        SELECT od.[OrderId]
+        FROM [dbo].[OrderDetail] AS od
+        WHERE od.[ArticleId] = (
+            SELECT art.[Id]
+            FROM [dbo].[Article] AS art
+            WHERE art.[ReferenceArticleId] = @ReferenceArticleId
+        )
+    )
+END
+GO
+
 USE [OrdersDb]
 GO
 
-INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice]) VALUES ('Wild Caught Fresh Alaskan Halibut Fillet',20.57);
-INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice]) VALUES ('Own Honey Wheat Bread',3.02);
-INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice]) VALUES ('Snack Pack Chocolate Pudding Cups',5.15);
-INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice]) VALUES ('Amish Blue Cheese Crumbles',4.61);
-INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice]) VALUES ('Tomato Sauce',1.03);
-INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice]) VALUES ('Sweet Treats Vanilla Ice Cream Sandwiches',3.43);
-INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice]) VALUES ('Beer 12 oz Bottles',10.02);
-INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice]) VALUES ('Crisp Linen Scent Disinfectant Spray',4.61);
+INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice],[ReferenceArticleId]) VALUES ('Sweet Treats Vanilla Ice Cream Sandwiches',3.43,6);
+INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice],[ReferenceArticleId]) VALUES ('Beer 12 oz Bottles',10.02,7);
+INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice],[ReferenceArticleId]) VALUES ('Amish Blue Cheese Crumbles',4.61,4);
+INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice],[ReferenceArticleId]) VALUES ('Own Honey Wheat Bread',3.02,2);
+INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice],[ReferenceArticleId]) VALUES ('Wild Caught Fresh Alaskan Halibut Fillet',20.57,1);
+INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice],[ReferenceArticleId]) VALUES ('Snack Pack Chocolate Pudding Cups',5.15,3);
+INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice],[ReferenceArticleId]) VALUES ('Crisp Linen Scent Disinfectant Spray',4.61,8);
+INSERT INTO OrdersDb.dbo.Article ([Name],[UnitPrice],[ReferenceArticleId]) VALUES ('Tomato Sauce',1.03,5);
 GO
 
 INSERT INTO OrdersDb.dbo.Customer([FullName]) VALUES ('Luis Ignacio Orozco')

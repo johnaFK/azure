@@ -15,7 +15,9 @@ echo "Creating Database Server: $ServerName ........"
 az sql server create -l $Location -g $RGname -n $ServerName -u $AdminUser -p $AdminPwd
 
 echo "Creating Firewall Rule for Database Server: $ServerName ........"
-az sql server firewall-rule create -g $RGname -s $ServerName -n $FirewallRuleName --start-ip-address $StartIP --end-ip-address $EndIP
+az sql server firewall-rule create -g $RGname -s $ServerName -n cellphone --start-ip-address 201.166.158.116 --end-ip-address 201.166.158.116
+az sql server firewall-rule create -g $RGname -s $ServerName -n hdi --start-ip-address 200.76.181.6 --end-ip-address 200.76.181.6
+az sql server firewall-rule create -g $RGname -s $ServerName -n casa --start-ip-address 177.228.35.143 --end-ip-address 177.228.35.143
 
 echo "Creating Database $DbName ......" 
 az sql db create -g $RGname -s $ServerName -n $DbName --service-objective $DbServiceObjective
