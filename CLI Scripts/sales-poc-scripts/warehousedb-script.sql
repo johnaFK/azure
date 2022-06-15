@@ -71,6 +71,9 @@ BEGIN
 END
 GO
 
+CREATE TYPE ArticlesIds AS TABLE (ArticleId int)
+GO
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -80,8 +83,8 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE usp_GetWarehouseStocksByArticleId
-	@ArticleId int = 0 
+CREATE PROCEDURE usp_GetWarehouseStocksByArticlesId
+	@ArticlesId ArticlesIds READONLY
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -91,7 +94,7 @@ BEGIN
     -- Insert statements for procedure here
 	SELECT ws.WarehouseId, ws.ArticleId, ws.Quantity
     FROM WarehouseStock AS ws
-    WHERE ws.ArticleId = @ArticleId
+    WHERE ws.ArticleId IN (SELECT * FROM @ArticlesId)
 END
 GO
 

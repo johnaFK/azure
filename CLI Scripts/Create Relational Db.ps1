@@ -7,7 +7,7 @@ Param(
     [string] $FirewallRuleName,
     [string] $StartIP,
     [string] $EndIP,
-    [string] $DbName,
+    [string[]] $DbName,
     [string] $DbServiceObjective
 )
 
@@ -19,10 +19,15 @@ az sql server firewall-rule create -g $RGname -s $ServerName -n cellphone --star
 az sql server firewall-rule create -g $RGname -s $ServerName -n hdi --start-ip-address 200.76.181.6 --end-ip-address 200.76.181.6
 az sql server firewall-rule create -g $RGname -s $ServerName -n casa --start-ip-address 177.228.35.143 --end-ip-address 177.228.35.143
 
-echo "Creating Database $DbName ......" 
-az sql db create -g $RGname -s $ServerName -n $DbName --service-objective $DbServiceObjective
+foreach ($db in $DbName) {
+    echo "Creating Database $db ......" 
+    az sql db create -g $RGname -s $ServerName -n $db --service-objective $DbServiceObjective
 
-$ConnectionString=$(az sql db show-connection-string -s $ServerName -n $DbName -c ado.net)
+    $ConnectionString=$(az sql db show-connection-string -s $ServerName -n $db -c ado.net)
+    
+    echo "ADO.NET Connection String: $ConnectionString"
+
+}
+
 $ServerFullyDomainName = $(az sql server list -g $RGname --query "[?name=='$ServerName'].[fullyQualifiedDomainName]" --output tsv)
 
-echo "ADO.NET Connection String: $ConnectionString"
