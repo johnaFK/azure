@@ -48,5 +48,32 @@ $OsDiskSize="64"
     customScript `
     Microsoft.Azure.Extensions `
     $RGName `
-    '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-wso2-micro-integrator-on-linux.sh\"], \"commandToExecute\": \"./install-wso2-micro-integrator-on-linux.sh\"}' `
+    '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-wso2-integrator-on-linux.sh\"], \"commandToExecute\": \"./install-wso2-integrator-on-linux.sh\"}' `
     $VMName 
+
+& $PSScriptRoot"\az-network-nsg-rule-create" `
+    $RGname `
+    $NSGname `
+    wso2-esb-passthrough-nio-https-transport-first `
+    tcp `
+    100 `
+    8280 `
+    Allow
+  
+& $PSScriptRoot"\az-network-nsg-rule-create" `
+    $RGname `
+    $NSGname `
+    wso2-esb-passthrough-nio-https-transport-second `
+    tcp `
+    101 `
+    8243 `
+    Allow
+  
+& $PSScriptRoot"\az-network-nsg-rule-create" `
+    $RGname `
+    $NSGname `
+    wso2-esb-https-servlet `
+    tcp `
+    102 `
+    9443 `
+    Allow

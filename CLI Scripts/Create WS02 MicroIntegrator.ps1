@@ -77,7 +77,7 @@ Write-Output "Installing WSO2-EI...."
         customScript `
         Microsoft.Azure.Extensions `
         $RGName `
-        '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-wso2-micro-integrator-on-linux.sh\"], \"commandToExecute\": \"./install-wso2-micro-integrator-on-linux.sh\"}' `
+        '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-wso2-integrator-on-linux.sh\"], \"commandToExecute\": \"./install-wso2-integrator-on-linux.sh\"}' `
         $VMName 
 
 Write-Output "The creation of the VM with WSO2 Enterprise Integrator has finished."
