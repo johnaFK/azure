@@ -37,7 +37,7 @@ $DbStructureScriptPath = "$PSScriptRoot\sales-poc-scripts\$DbScript"
     $StorageType `
     $OsDiskSize
 
-    & $PSScriptRoot"\az-network-nsg-rule-create" `
+& $PSScriptRoot"\az-network-nsg-rule-create" `
     $RGname `
     $NSGname `
     wso2-esb-passthrough-nio-https-transport-first `

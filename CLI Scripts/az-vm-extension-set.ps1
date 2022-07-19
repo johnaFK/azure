@@ -1,4 +1,5 @@
 Param(
+    $ExtensionName,
     $Name,
     $Publisher,
     $RGName,
@@ -6,7 +7,7 @@ Param(
     $VMName
 )
 
-Write-Output "Installing Extension in $VMName..........."	  
+Write-Output "Installing $ExtensionName Extension in $VMName..........."	  
 az vm extension set `
   --name $Name `
   --publisher $Publisher `
