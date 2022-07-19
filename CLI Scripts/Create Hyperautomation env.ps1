@@ -14,7 +14,7 @@ $RGName = "$ServiceName-$EnviromentName-rg"
 
 $RGid =$(az group list --query "[?name=='$RGName'].[id]" --output tsv)
 
-$VMName="$EnviromentName-$ServiceName-hyper-$LocationAbr"
+$VMName="$EnviromentName-$ServiceName-servers-$LocationAbr"
 $ImageUrnAlias="CentOS"
 $Size="Standard_B2s"
 $AuthType="ssh"
@@ -41,4 +41,12 @@ $OsDiskSize="64"
     Microsoft.Azure.Extensions `
     $RGName `
     '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-docker-on-linux.sh\"], \"commandToExecute\": \"./install-docker-on-linux.sh\"}' `
+    $VMName 
+
+& $PSScriptRoot"\az-vm-extension-set.ps1" `
+    WS02ei-integrator `
+    customScript `
+    Microsoft.Azure.Extensions `
+    $RGName `
+    '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-wso2-micro-integrator-on-linux.sh\"], \"commandToExecute\": \"./install-wso2-micro-integrator-on-linux.sh\"}' `
     $VMName 
