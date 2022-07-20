@@ -43,6 +43,8 @@ $OsDiskSize="64"
     '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-docker-on-linux.sh\"], \"commandToExecute\": \"./install-docker-on-linux.sh\"}' `
     $VMName 
 
+$NSGname="$VMName" + "NSG"
+
 & $PSScriptRoot"\az-vm-extension-set.ps1" `
     WS02ei-integrator `
     customScript `
@@ -76,4 +78,47 @@ $OsDiskSize="64"
     tcp `
     102 `
     9443 `
+    Allow
+
+& $PSScriptRoot"\az-vm-extension-set.ps1" `
+    MongoDB `
+    customScript `
+    Microsoft.Azure.Extensions `
+    $RGName `
+    '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-mongodb-on-linux.sh\"], \"commandToExecute\": \"./install-mongodb-on-linux.sh\"}' `
+    $VMName 
+  
+& $PSScriptRoot"\az-network-nsg-rule-create" `
+    $RGname `
+    $NSGname `
+    mongodb `
+    tcp `
+    102 `
+    9443 `
+    Allow
+
+& $PSScriptRoot"\az-vm-extension-set.ps1" `
+    WS02ei-integrator `
+    customScript `
+    Microsoft.Azure.Extensions `
+    $RGName `
+    '{\"fileUris\":[\"https://raw.githubusercontent.com/johnaFK/azure/CLI-Scripts/CLI%20Scripts/install-jbpm-on-linux.sh\"], \"commandToExecute\": \"./install-jbpm-on-linux.sh\"}' `
+    $VMName 
+
+& $PSScriptRoot"\az-network-nsg-rule-create" `
+    $RGname `
+    $NSGname `
+    jbpm-web-server `
+    tcp `
+    103 `
+    8080 `
+    Allow
+  
+& $PSScriptRoot"\az-network-nsg-rule-create" `
+    $RGname `
+    $NSGname `
+    jbpm-git-repository `
+    tcp `
+    104 `
+    8001 `
     Allow
