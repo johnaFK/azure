@@ -1,4 +1,4 @@
-Param([string]$Location, [string]$RGName)
+Param([string]$Location, [string]$RGName, [string]$StRedundancy)
 
 echo "Creating Resource Group $RGName........................"
 
